@@ -3,6 +3,8 @@ import DayList from "components/DayList";
 import InterviewerListItem from "components/InterviewerListItem";
 import InterviewerList from 'components/InterviewerList';
 import Appointment from "components/Appointments";
+import Header from "components/Appointments/Header";
+import Empty from "components/Appointments/Empty";
 
 import React from "react";
 
@@ -153,3 +155,5 @@ storiesOf("Button", module)
   })
   .add("Appointment", () => <Appointment />)
   .add("Appointment with time", () => <Appointment time={"12pm"}/>)
+  .add("Header", () => <Header time={"12pm"}/>)
+  .add("Empty", () => <Empty onClick={action("onAdd")}/>)
