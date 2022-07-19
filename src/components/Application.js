@@ -45,8 +45,8 @@ const [interviewer, setInterviewer] = useState(0)
         <nav className="sidebar__menu">
         <DayList
           days={days}
-          day={day}
-          setDay={setDay}
+          value={day}
+          onChange={setDay}
         />
         </nav>
         <img className="sidebar__lhl sidebar--centered" src="images/lhl.png" alt="Lighthouse Labs" />
@@ -61,7 +61,7 @@ const [interviewer, setInterviewer] = useState(0)
 
 /*<InterviewerList
 interviewers={interviewers}
-interviewer={interviewer}
-setInterviewer={setInterviewer}
+value={interviewer}
+onChange={setInterviewer}
 />
 */
