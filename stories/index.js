@@ -3,14 +3,14 @@ import DayList from "components/DayList";
 import InterviewerListItem from "components/InterviewerListItem";
 import InterviewerList from 'components/InterviewerList';
 
-import Appointment from "components/Appointments";
-import Header from "components/Appointments/Header";
-import Empty from "components/Appointments/Empty";
-import Show from "components/Appointments/Show";
-import Confirm from "components/Appointments/Confirm";
-import Status from "components/Appointments/Status";
-import Error from "components/Appointments/Error";
-import Form from "components/Appointments/Form";
+import Appointment from "components/Appointment";
+import Header from "components/Appointment/Header";
+import Empty from "components/Appointment/Empty";
+import Show from "components/Appointment/Show";
+import Confirm from "components/Appointment/Confirm";
+import Status from "components/Appointment/Status";
+import Error from "components/Appointment/Error";
+import Form from "components/Appointment/Form";
 
 
 import React, { Fragment } from 'react'
