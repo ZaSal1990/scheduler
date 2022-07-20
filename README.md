@@ -21,3 +21,6 @@ npm test
 ```sh
 npm run storybook
 ```
+
+
+server is inside scheduler-api inside root dir on local
