@@ -57,15 +57,25 @@ const interviewers = [
 
 export default function Application(props) {
 
-const [day, setDay] = useState('Monday')
-const [days, setDays] = useState([]);
+// const [day, setDay] = useState('Monday')
+// const [days, setDays] = useState([]);
+
+
+const [state, setState] = useState({ //state.day, state.days,...
+  day: "Monday",
+  days: [],
+  appointments: {}
+});
+
+const setDay = day => setState(prev => ({...prev, day})); //now referring to state in the effect method, but we haven't declared it in the dependency list. we need to remove the dependency. We do that by passing a function to setState. prev => ({...prev, day}) enables dependancy on prev in the presence of [] as second argument of useEffect
+const setDays = days => setState(prev => ({...prev, days}));
+//line 64 - 71 is the alternate code after line 60 & 61 is commented
 
 useEffect(() => {
   axios.get('http://localhost:8001/api/days').then((response) => {
-    setDays(response.data);
-    console.log(days)
+    setDays(response.data);//see notes for reasoning
   })
-}
+}, []
 );
 
 
@@ -77,8 +87,8 @@ useEffect(() => {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
         <DayList
-          days={days}
-          value={day}
+          days={state.days}
+          value={state.day}
           onChange={setDay}
         />
         </nav>
