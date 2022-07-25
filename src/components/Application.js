@@ -85,22 +85,19 @@ export default function Application(props) {
         const appointments = all[1].data;
         const interviewers = all[2].data;
         setState(prev => ({ ...prev, days, appointments, interviewers }));
-
-        console.log('state', state.interviewers)
-        //console.log('response', all[0].data)
       });
 
   }, []); //see notes for reasoning for setDays
 
   const appoinments = getAppointmentsForDay(state, state.day);
-  //const interview = getInterview(state, appointment.interview);
   const schedule = appoinments.map(appointment => {
+    const interview = getInterview(state, appointment.interview);
     return (
       <Appointment
       key={appointment.id}
       id={appointment.id}
       time={appointment.time}
-      //interview={interview}
+      interview={interview}
       />)
   });
 
