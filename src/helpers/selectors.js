@@ -4,14 +4,38 @@
 
 function getAppointmentsForDay(state, day) {
 
-  let appointmentArr = [];
+  let appointmentIds = []
+  let results = [];
 
-  state.days.map(dayObject => {
+  state.days.forEach(dayObject => {
     if (dayObject.name === day) {
-      dayObject.appointments.forEach(apptId => appointmentArr.push(apptId))
+      dayObject.appointments.forEach(apptId => appointmentIds.push(apptId))
     }
   })
-  return appointmentArr;
+
+  for (let appointmentId of appointmentIds){
+  results.push(state.appointments[appointmentId]); 
+  }
+
+  return results;
 }
 
-module.exports = {getAppointmentsForDay}
+
+function getInterview(state, interview) {  
+  if (interview)
+  {
+    const interviewerId = interview.interviewer;
+ let result = { 
+        student : interview.student,
+        interviewer : state.interviewers[interviewerId]
+      };
+      return result;
+  }
+  
+  else if (!interview){
+    return null;
+  }
+}
+
+
+module.exports = {  getAppointmentsForDay, getInterview }
