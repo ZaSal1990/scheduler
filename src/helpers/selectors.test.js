@@ -59,12 +59,12 @@ test("getAppointmentsForDay returns an array containing the correct appointment 
   expect(second).toEqual(state.appointments["5"]);
 });
 
-test("getAppointmentsForDay returns an empty array when the days data is empty", () => {
+test.only("getAppointmentsForDay returns an empty array when the days data is empty", () => {
   const result = getAppointmentsForDay({ days: [] }, 2);
   expect(result.length).toEqual(0);
 });
 
-test("getAppointmentsForDay returns an empty array when the day is not found", () => {
+test.only("getAppointmentsForDay returns an empty array when the day is not found", () => {
   const result = getAppointmentsForDay(state, 3);
   expect(result.length).toEqual(0);
 });
