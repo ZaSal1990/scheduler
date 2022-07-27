@@ -6,7 +6,7 @@ import "components/Application.scss";
 
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import { getAppointmentsForDay, getInterview, getInterviewersForDay } from '../helpers/selectors';
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from '../helpers/selectors'
 
 // const appointments = {
 //   "1": {
@@ -90,14 +90,18 @@ export default function Application(props) {
   }, []); //see notes for reasoning for setDays
 
   const appoinments = getAppointmentsForDay(state, state.day);
+  //const interviewers = getInterviewersForDay(state, state.day);
   const schedule = appoinments.map(appointment => {
+    const interview = getInterview(state, appointment.interview);
+    
+    
     return (
       <Appointment
       key={appointment.id}
       id={appointment.id}
       time={appointment.time}
-      interview={getInterview(state, appointment.interview)}
-      interviewers={appointment.interviewers}
+      interview={interview}
+      
       />)
   });
 
