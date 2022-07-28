@@ -69,7 +69,22 @@ export default function Application(props) {
     interviewers : {}
   });
 
-  
+  function bookInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    setState({
+      ...state,
+      appointments
+    });
+   
+  }
+
 
   const setDay = day => setState(prev => ({ ...prev, day })); //now referring to state in the effect method, but we haven't declared it in the dependency list. we need to remove the dependency. We do that by passing a function to setState. prev => ({...prev, day}) enables dependancy on prev in the presence of [] as second argument of useEffect
   
@@ -90,17 +105,28 @@ export default function Application(props) {
   }, []); //see notes for reasoning for setDays
 
   const appoinments = getAppointmentsForDay(state, state.day);
-  //const interviewers = getInterviewersForDay(state, state.day);
+  const interviewers = getInterviewersForDay(state, state.day);
+  
+  // console.log('state.days', state.days)
+  // console.log('state.appointments', state.appointments)
   const schedule = appoinments.map(appointment => {
-    const interview = getInterview(state, appointment.interview);
+  const interview = getInterview(state, appointment.interview);
     
     
     return (
       <Appointment
+      // key={appointment.id}
+      // id={appointment.id}
+      // time={appointment.time}
+      // interview={interview}
+      {...appoinments}
       key={appointment.id}
       id={appointment.id}
       time={appointment.time}
       interview={interview}
+      bookInterview={bookInterview}
+      interviewers={interviewers}
+     
       
       />)
   });
@@ -127,11 +153,5 @@ export default function Application(props) {
 }
 
 
-/*<InterviewerList
-interviewers={interviewers}
-value={interviewer}
-onChange={setInterviewer}
-/>
-*/
 
 

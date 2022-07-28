@@ -12,6 +12,7 @@ export default function InterviewerList(props) {
 
 return (
   <ul className="interviewers__list">
+    {console.log(props.interviewers)}
     {props.interviewers.map(interviewer =>  <InterviewerListItem 
         key={interviewer.id}
         name={interviewer.name}
