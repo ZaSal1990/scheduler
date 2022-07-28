@@ -43,7 +43,7 @@ export default function Appointment(props) {
       };
       console.log(interview);
       props.bookInterview(props.id, interview)
-      transition(SHOW);
+      .then(() => transition(SHOW))
   
   }
 

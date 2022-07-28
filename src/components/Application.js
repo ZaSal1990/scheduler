@@ -70,6 +70,7 @@ export default function Application(props) {
   });
 
   function bookInterview(id, interview) {
+    console.log('interview', interview)
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -82,8 +83,14 @@ export default function Application(props) {
       ...state,
       appointments
     });
-   
-  }
+    console.log('appointment', { interview })
+
+    return axios
+    .put(`/api/appointments/${id}`, {
+      interview,
+    }).then((res) => setState({ ...state, appointments}));
+    
+}
 
 
   const setDay = day => setState(prev => ({ ...prev, day })); //now referring to state in the effect method, but we haven't declared it in the dependency list. we need to remove the dependency. We do that by passing a function to setState. prev => ({...prev, day}) enables dependancy on prev in the presence of [] as second argument of useEffect
