@@ -6,14 +6,15 @@ function getAppointmentsForDay(state, day) {
 
   let appointmentIds = []
   let results = [];
+  console.log('reached inside of getAppointmnetsForDay');
 
-  state.days.forEach(dayObject => {
+  state.days.filter(dayObject => {
     if (dayObject.name === day) {
       dayObject.appointments.forEach(apptId => appointmentIds.push(apptId))
-    }
-  })
+  }})
 
-  for (let appointmentId of appointmentIds){
+  for (let appointmentId of appointmentIds) {
+   console.log('state.appointments[appointmentId] from selector', state.appointments[appointmentId])
   results.push(state.appointments[appointmentId]); 
   }
 
@@ -69,7 +70,7 @@ function getInterviewersForDay(state, day) {
       //console.log(state.appointments[appointmentId].interview.interviewer)
       
       const interviewerId = state.appointments[appointmentId].interview.interviewer;
-      if (day === 'Tuesday') console.log('interviewerId',interviewerId, appointmentId)
+      //if (day === 'Tuesday') console.log('interviewerId',interviewerId, appointmentId)
       if (!(interviewerId in interviewerExists))
       {
       results.push(state.interviewers[interviewerId])
