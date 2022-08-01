@@ -17,7 +17,7 @@ export default function Application(props) {
     bookInterview,
     cancelInterview
   } = useApplicationData();
-  
+
   const appoinments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
   
@@ -47,6 +47,7 @@ export default function Application(props) {
           <DayList
             days={state.days}
             value={state.day}
+            spots={state.spots}
             onChange={setDay}
           />
         </nav>
