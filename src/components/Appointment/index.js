@@ -9,6 +9,10 @@ import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm";
+import Error from "./Error";
+
+
+
 import useVisualMode from "../../hooks/useVisualMode";
 
 
@@ -21,7 +25,8 @@ export default function Appointment(props) {
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
   const EDIT = "EDIT";
-
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DELETE";
 
   const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY);
 
@@ -38,34 +43,35 @@ export default function Appointment(props) {
   }, [mode, transition, props.interview])
 
   const save = function (student, interviewer) {
+
     if (student && interviewer) {
+      
+      
       const interview = {
-        student: student, //was name before student, check form component
+        student: student, 
         interviewer
       };
-      //console.log(interview);
+      
       transition(SAVING)
-      props.bookInterview(props.id, interview)
-      .then(() => {
-        transition(SHOW);
-      })
+      props
+      .bookInterview(props.id, interview)
+      .then(() => transition(SHOW))
+      .catch(error => transition(ERROR_SAVE, true));
     }
   }
-  
 
-  const remove = function (name, interviewer) {
+  const remove = function (student, interviewer) {
     const interview = {
-      student: name,
+      student: student,
       interviewer,
     };
 
     if (mode === CONFIRM) {
     transition(DELETING, true);
-
-      props.cancelInterview(props.id, interview).then(() =>{
-      console.log('after removing data remotely, from inside bookinterview from index.js');
-      transition(EMPTY)
-      });
+      props
+      .cancelInterview(props.id, interview)
+      .then(() => transition(EMPTY))
+      .catch((error) => transition(ERROR_DELETE, true))
     }
     else 
     transition(CONFIRM)
@@ -75,6 +81,7 @@ export default function Appointment(props) {
   const edit = function () {
   transition(EDIT)
   }
+
 //console.log('props',props)
   return (
     <article className="appointment">
@@ -114,6 +121,18 @@ export default function Appointment(props) {
           onSave={save}
         />
       )}
+       {mode === ERROR_SAVE && 
+        <Error 
+          message="Could not create appointment"
+          onClose={() => back()}
+        />
+      }
+      {mode === ERROR_DELETE && 
+        <Error 
+          message="Could not cancel appointment"
+          onClose={() => back()}
+        />
+      }
     </article>
   );
 }

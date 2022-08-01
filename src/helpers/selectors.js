@@ -6,7 +6,7 @@ function getAppointmentsForDay(state, day) {
 
   let appointmentIds = []
   let results = [];
-  console.log('reached inside of getAppointmnetsForDay');
+  //console.log('reached inside of getAppointmnetsForDay');
 
   state.days.filter(dayObject => {
     if (dayObject.name === day) {
@@ -14,7 +14,7 @@ function getAppointmentsForDay(state, day) {
   }})
 
   for (let appointmentId of appointmentIds) {
-   console.log('state.appointments[appointmentId] from selector', state.appointments[appointmentId])
+   //console.log('state.appointments[appointmentId] from selector', state.appointments[appointmentId])
   results.push(state.appointments[appointmentId]); 
   }
 
