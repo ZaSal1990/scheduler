@@ -20,6 +20,7 @@ export default function Appointment(props) {
   const SAVING = "SAVING";
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
+  const EDIT = "EDIT";
 
 
   const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY);
@@ -42,7 +43,7 @@ export default function Appointment(props) {
         student: student, //was name before student, check form component
         interviewer
       };
-      console.log(interview);
+      //console.log(interview);
       transition(SAVING)
       props.bookInterview(props.id, interview)
       .then(() => {
@@ -71,7 +72,9 @@ export default function Appointment(props) {
      
   }
 
-
+  const edit = function () {
+  transition(EDIT)
+  }
 //console.log('props',props)
   return (
     <article className="appointment">
@@ -81,6 +84,7 @@ export default function Appointment(props) {
         student={props.interview.student}
         interviewer={props?.interview?.interviewer?.name} 
         onDelete={remove}
+        onEdit={edit}
       />
       }
       {mode === CREATE &&
@@ -101,6 +105,15 @@ export default function Appointment(props) {
           onConfirm={remove}
           message="Are you sure you would like to delete?" 
         />}
+        {mode === EDIT && (
+        <Form
+          name={props.interview.student}
+          interviewer={props.interview.interviewer.id}
+          interviewers={props.interviewers}
+          onCancel={() => transition(SHOW)}
+          onSave={save}
+        />
+      )}
     </article>
   );
 }

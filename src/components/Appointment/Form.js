@@ -31,6 +31,7 @@ export default function Form(props) {
   //   props.onSave(student, interviewer);
   // }
 
+  
   return (
     <main className="appointment__card appointment__card--create">
     <section className="appointment__card-left">
@@ -39,7 +40,7 @@ export default function Form(props) {
         className="appointment__create-input text--semi-bold"
         name={props.student}
         type="text"
-        placeholder="Enter Student Name"
+        placeholder={props.name ? props.name : "Enter student name"}
         onChange={(event) => setStudent(event.target.value)}
         value={student}
       />
