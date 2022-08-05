@@ -53,7 +53,7 @@ it("renders a disabled button", () => {
 
   const button = getByText("Disabled");
 
-  fireEvent.click(button);
+  fireEvent.click(button); 
 
   expect(handleClick).toHaveBeenCalledTimes(0);
 });

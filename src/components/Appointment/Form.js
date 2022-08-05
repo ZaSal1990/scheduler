@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 export default function Form(props) {
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
-  //const [error, setError] = useState("");
+  const [error, setError] = useState("");
 
 
    //Helper function to clear all fields
@@ -16,20 +16,23 @@ export default function Form(props) {
   }
 
   function cancel () {
-    // props.onCancel;
     reset();
     props.onCancel()
   }
 
 
-  // function validate() {
-  //   if (student === "") {
-  //     setError("Student name cannot be blank")
-  //     return;
-  //   }
-  //   setError("")
-  //   props.onSave(student, interviewer);
-  // }
+  function validate() {
+    if (student === "") {
+      setError("Student name cannot be blank");
+      return;
+    }
+    if (interviewer === null) {
+      setError("Please select an interviewer");
+      return;
+    }
+  
+    props.onSave(student, interviewer);
+  }
 
   
   return (
@@ -40,10 +43,13 @@ export default function Form(props) {
         className="appointment__create-input text--semi-bold"
         name={props.student}
         type="text"
-        placeholder={props.name ? props.name : "Enter student name"}
-        onChange={(event) => setStudent(event.target.value)}
+        placeholder="Enter Student Name"
         value={student}
+        //placeholder={props.name ? props.name : "Enter Student Name"}
+        onChange={(event) => setStudent(event.target.value)}
+        data-testid="student-name-input"
       />
+      <section className="appointment__validation">{error}</section>
     </form>
     <InterviewerList 
       interviewers={props.interviewers} 
@@ -54,7 +60,7 @@ export default function Form(props) {
   <section className="appointment__card-right">
     <section className="appointment__actions">
       <Button danger onClick={cancel}>Cancel</Button>
-      <Button confirm onSubmit={event => event.preventDefault()} onClick={ () => props.onSave(student, interviewer)}>Save</Button>
+      <Button confirm onSubmit={event => event.preventDefault()} onClick={ () => validate(student, interviewer)}>Save</Button>
     </section>
   </section>
 </main>
