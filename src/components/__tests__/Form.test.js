@@ -45,58 +45,40 @@ it("validates that the student name is not blank", () => {
   expect(onSave).not.toHaveBeenCalled();
 });
 
-it("validates that the interviewer cannot be null", () => {
+//______________________________________________________________________________//
+
+it("can successfully save after trying to submit an empty student name", () => {
   /* 1. Create the mock onSave function */
-  const onSave = jest.fn();
-
-  /* 2. Render the Form with interviewers and the onSave mock function passed as an onSave prop, the name prop should be blank or undefined */
-  const { getByText } = render(
-    <Form interviewers={interviewers} onSave={onSave} student="Lydia Miller-Jones" />
-  );
-
-  /* 3. Click the save button */
-  fireEvent.click(getByText("Save"));
-
-  expect(getByText(/please select an interviewer/i)).toBeInTheDocument();
-  expect(onSave).not.toHaveBeenCalled();
-});
-
-it("calls onSave function when the name and interviewer is defined", () => {
-  /* 1. Create the mock onSave function */
-  const onSave = jest.fn();
+  const onSave = jest.fn();  
 
   /* 2. Render the Form with interviewers, student name and the onSave mock function passed as an onSave prop */
-  const { getByText, queryByText } = render(
-    <Form
-      interviewers={interviewers}
-      onSave={onSave}
-      student="Lydia Miller-Jones"
-      interviewer={interviewers[0].id}
-    />
-  );
-
-  /* 3. Click the save button */
-  fireEvent.click(getByText("Save"));
-
-  expect(queryByText(/student name cannot be blank/i)).toBeNull();
-  expect(queryByText(/please select an interviewer/i)).toBeNull();
-  expect(onSave).toHaveBeenCalledTimes(1);
-  expect(onSave).toHaveBeenCalledWith("Lydia Miller-Jones", 1);
-});
-
-it("submits the name entered by the user", () => {
-  const onSave = jest.fn();
-  const { getByText, getByPlaceholderText } = render(
+  const { getByText, getByPlaceholderText, queryByText } = render(
     <Form interviewers={interviewers} onSave={onSave} interviewer={1} />
   );
 
-  const input = getByPlaceholderText("Enter Student Name");
+    /* 3. Click the save button, fire event*/
+  fireEvent.click(getByText("Save"));
+ 
+  /* 4. Verify */
+  expect(getByText(/student name cannot be blank/i)).toBeInTheDocument();
+  expect(onSave).not.toHaveBeenCalled();
 
-  fireEvent.change(input, { target: { value: "Lydia Miller-Jones" } });
+  /* 5. Fire next event (capturing on-change feature on text input) */
+  fireEvent.change(getByPlaceholderText("Enter Student Name"), {
+    target: { value: "Lydia Miller-Jones" }
+  });
+
+  /* 6. Fire click event after on change */
   fireEvent.click(getByText("Save"));
 
+  /* 7. Verify */
+  expect(queryByText(/student name cannot be blank/i)).toBeNull();
   expect(onSave).toHaveBeenCalledTimes(1);
   expect(onSave).toHaveBeenCalledWith("Lydia Miller-Jones", 1);
 });
+
+
+
+
 
 });

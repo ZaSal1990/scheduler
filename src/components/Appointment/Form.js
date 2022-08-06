@@ -20,20 +20,15 @@ export default function Form(props) {
     props.onCancel()
   }
 
-
   function validate() {
     if (student === "") {
       setError("Student name cannot be blank");
       return;
     }
-    if (interviewer === null) {
-      setError("Please select an interviewer");
-      return;
-    }
   
+    setError("");
     props.onSave(student, interviewer);
   }
-
   
   return (
     <main className="appointment__card appointment__card--create">
