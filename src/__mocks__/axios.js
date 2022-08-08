@@ -52,10 +52,12 @@ const fixtures = {
     }
   }
 };
+
 const interview ={ 
   student: "Lydia Miller-Jones",
   interviewer: "Sylvia Palmer"
 }
+
 
 export default {
   get: jest.fn(url => {
@@ -91,6 +93,14 @@ put: jest.fn(() => {
     status: 200,
     statusText: "OK",
     data: interview
+    })
+  }),
+
+  delete: jest.fn((id) => {
+    return Promise.resolve({
+      status: 200,
+      statusText: "OK",
+      data: null
     })
   })
 }
