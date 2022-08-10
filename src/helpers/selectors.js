@@ -3,28 +3,37 @@
 //helper fnc to convert data received form API into a format which can beaccepted as props by our app
 
 function getAppointmentsForDay(state, day) {
+  const selectedDay = state.days.find(d => d.name === day)
+  if (!selectedDay) return [];
 
-  let appointmentIds = []
-  let results = [];
-  //console.log('reached inside of getAppointmnetsForDay');
-
-  state.days.filter(dayObject => {
-    if (dayObject.name === day) {
-      dayObject.appointments.forEach(apptId => appointmentIds.push(apptId))
-  }})
-
-  for (let appointmentId of appointmentIds) {
-   //console.log('state.appointments[appointmentId] from selector', state.appointments[appointmentId])
-  results.push(state.appointments[appointmentId]); 
-  }
-
-  return results;
+  const appointmentsForDay = selectedDay.appointments.map(appointmentId => state.appointments[appointmentId])
+  return appointmentsForDay;
 }
+
+
+// function getAppointmentsForDay(state, day) {
+
+//   let appointmentIds = []
+//   let results = [];
+//   //console.log('reached inside of getAppointmnetsForDay');
+
+//   state.days.filter(dayObject => {
+//     if (dayObject.name === day) {
+//       dayObject.appointments.forEach(apptId => appointmentIds.push(apptId))
+//   }})
+
+//   for (let appointmentId of appointmentIds) {
+//    //console.log('state.appointments[appointmentId] from selector', state.appointments[appointmentId])
+//   results.push(state.appointments[appointmentId]); 
+//   }
+
+//   return results;
+// }
 
 // function getAppointmentsForDay(state, dayId) {
 //   let appointmentIds;
 //   let results = [];
-  
+
 //   state.days.map(dayName => 
 //       {
 //         if (dayName.id === dayId) {
@@ -34,59 +43,55 @@ function getAppointmentsForDay(state, day) {
 //          }
 //         }
 //       })
-  
+
 //   return results;
 //   }
 
-function getInterview(state, interview) {  
-  if (interview)
-  {
-    const interviewerId = interview.interviewer;
- let result = { 
-        student : interview.student,
-        interviewer : state.interviewers[interviewerId]
-      };
-      return result;
-  }
-  
-  else if (!interview){
-    return null;
-  }
+function getInterview(state, interview) {
+  if (!interview) return null;
+
+  const interviewerId = interview.interviewer;
+  const result = {
+    student: interview.student,
+    interviewer: state.interviewers[interviewerId]
+  };
+  return result;
 }
 
 function getInterviewersForDay(state, day) {
+  const selectedDay = state.days.find(d => d.name === day)
+  if (!selectedDay) return [];
 
-const foundDay = state.days.find( d => d.name === day)
-  if (!foundDay) return [];
-  return foundDay.interviewers.map(interviewerId => state.interviewers[interviewerId]);
+  const interviewersForDay = selectedDay.interviewers.map(interviewerId => state.interviewers[interviewerId])
+  return interviewersForDay;
+}
 
+// let appointmentIds = []
+// let results = [];
+// let interviewerExists = {};
+// state.days.forEach(dayObject => {
+//   if (dayObject.name === day) {
+//     dayObject.appointments.forEach(apptId => appointmentIds.push(apptId))
+//   }
+// })
 
-  // let appointmentIds = []
-  // let results = [];
-  // let interviewerExists = {};
-  // state.days.forEach(dayObject => {
-  //   if (dayObject.name === day) {
-  //     dayObject.appointments.forEach(apptId => appointmentIds.push(apptId))
-  //   }
-  // })
+//   for (let appointmentId of appointmentIds){
+//     if(state.appointments[appointmentId].interview?.interviewer){
 
-  // for (let appointmentId of appointmentIds){
-  //   if(state.appointments[appointmentId].interview?.interviewer){
-      
-  //     //console.log(state.appointments[appointmentId].interview.interviewer)
-      
-  //     const interviewerId = state.appointments[appointmentId].interview.interviewer;
-  //     //if (day === 'Tuesday') console.log('interviewerId',interviewerId, appointmentId)
-  //     if (!(interviewerId in interviewerExists))
-  //     {
-  //     results.push(state.interviewers[interviewerId])
-  //     }
-  //     interviewerExists[interviewerId] = true;
-  //   }
-  // }
-  // //console.log('Interviewers', results)
-  // return results;
- }
+//       //console.log(state.appointments[appointmentId].interview.interviewer)
+
+//       const interviewerId = state.appointments[appointmentId].interview.interviewer;
+//       //if (day === 'Tuesday') console.log('interviewerId',interviewerId, appointmentId)
+//       if (!(interviewerId in interviewerExists))
+//       {
+//       results.push(state.interviewers[interviewerId])
+//       }
+//       interviewerExists[interviewerId] = true;
+//     }
+//   }
+//   //console.log('Interviewers', results)
+//   return results;
+//  }
 
 // function getInterviewersForDay(state, day) {
 //   let appointmentIds = []
@@ -102,7 +107,7 @@ const foundDay = state.days.find( d => d.name === day)
 //   results.push(state.appointments[appointmentId]); 
 //   }
 
-//   return results;
+//    return results;
 //  }
 
-  module.exports = {  getAppointmentsForDay, getInterview, getInterviewersForDay }
+module.exports = { getAppointmentsForDay, getInterview, getInterviewersForDay }
