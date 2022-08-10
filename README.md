@@ -28,7 +28,7 @@ npm run storybook
 Clone repo [https://github.com/lighthouse-labs/scheduler-api]
 Read through README.md on the repo to create database on local and reset
 Server is inside scheduler-api inside root dir of scheduler-api
-Run API on [http://localhost:8001] via `npm start`
+Run API on port 8001 via `npm start`
 
 
 ## Scheduler Cypress Tests
