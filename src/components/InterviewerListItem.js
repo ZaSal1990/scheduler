@@ -16,21 +16,21 @@ export default function InterviewerListItem(props) {
 
 
   return (
-  <li className={interviewerStyles} 
-      onClick={props.setInterviewer} 
+    <li className={interviewerStyles}
+      onClick={props.setInterviewer}
       selected={props.selected}
-      >
-  <img
-    className={imageStyles}
-    src={props.avatar}
-    alt={props.name}
-  />
-  {props.selected && props.name}
-</li>
-  )}
+    >
+      <img
+        className={imageStyles}
+        src={props.avatar}
+        alt={props.name}
+      />
+      {props.selected && props.name}
+    </li>
+  )
+}
 
 
 
 
-   
- 
+

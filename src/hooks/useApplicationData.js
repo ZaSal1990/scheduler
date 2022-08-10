@@ -2,17 +2,16 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function useApplicationData(props) {
-    
 
-  const [state, setState] = useState({ //state.day, state.days,...
+
+  const [state, setState] = useState({ 
     day: "Monday",
     days: [],
     appointments: {},
-    interviewers : {}
+    interviewers: {}
   });
 
-  const setDay = day => setState(prev => ({ ...prev, day })); //now referring to state in the effect method, but we haven't declared it in the dependency list. we need to remove the dependency. We do that by passing a function to setState. prev => ({...prev, day}) enables dependancy on prev in the presence of [] as second argument of useEffect
-  
+  const setDay = day => setState(prev => ({ ...prev, day })); 
   function findDay(day) {
     const daysOfWeek = {
       Monday: 0,
@@ -35,7 +34,7 @@ export default function useApplicationData(props) {
       ...state.appointments,
       [id]: appointment
     };
-   
+
     const dayOfWeek = findDay(state.day)
 
     let day = {
@@ -47,49 +46,50 @@ export default function useApplicationData(props) {
       day = {
         ...state.days[dayOfWeek],
         spots: state.days[dayOfWeek].spots - 1
-      } 
+      }
     } else {
       day = {
         ...state.days[dayOfWeek],
         spots: state.days[dayOfWeek].spots
-      } 
+      }
     }
 
     let days = state.days
     days[dayOfWeek] = day;
     return axios
-    .put(`/api/appointments/${id}`, {
-      interview,
-    }).then((res) => { setState({...state, appointments, days})
-  })
-}
-
-function cancelInterview(id, interview) {
-
-  const appointment = {
-    ...state.appointments[id],
-    interview: null,
-  };
-  const appointments = {
-    ...state.appointments,
-    [id]: appointment,
-  };
-
-
-  const dayOfWeek = findDay(state.day)
-
-  const day = {
-    ...state.days[dayOfWeek],
-    spots: state.days[dayOfWeek].spots + 1
+      .put(`/api/appointments/${id}`, {
+        interview,
+      }).then((res) => {
+        setState({ ...state, appointments, days })
+      })
   }
 
-  let days = state.days
-  days[dayOfWeek] = day;
-  
-return axios.delete(`/api/appointments/${id}`).then(() => {
-  setState({...state, appointments}) //setting local state to null
-  })
-}
+  function cancelInterview(id, interview) {
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: null,
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+
+
+    const dayOfWeek = findDay(state.day)
+
+    const day = {
+      ...state.days[dayOfWeek],
+      spots: state.days[dayOfWeek].spots + 1
+    }
+
+    let days = state.days
+    days[dayOfWeek] = day;
+
+    return axios.delete(`/api/appointments/${id}`).then(() => {
+      setState({ ...state, appointments }) //setting local state to null
+    })
+  }
 
   useEffect(() => { //fetching data from API 
     Promise.all([
@@ -103,15 +103,15 @@ return axios.delete(`/api/appointments/${id}`).then(() => {
         setState(prev => ({ ...prev, days, appointments, interviewers }));
       });
 
-  }, []); //see notes for reasoning for setDays
+  }, []); 
 
-  
-  
+
+
   return {
     state,
     setDay,
     bookInterview,
     cancelInterview
-   } 
+  }
 
 }
