@@ -55,31 +55,37 @@ function getInterview(state, interview) {
 }
 
 function getInterviewersForDay(state, day) {
-  let appointmentIds = []
-  let results = [];
-  let interviewerExists = {};
-  state.days.forEach(dayObject => {
-    if (dayObject.name === day) {
-      dayObject.appointments.forEach(apptId => appointmentIds.push(apptId))
-    }
-  })
 
-  for (let appointmentId of appointmentIds){
-    if(state.appointments[appointmentId].interview?.interviewer){
+const foundDay = state.days.find( d => d.name === day)
+  if (!foundDay) return [];
+  return foundDay.interviewers.map(interviewerId => state.interviewers[interviewerId]);
+
+
+  // let appointmentIds = []
+  // let results = [];
+  // let interviewerExists = {};
+  // state.days.forEach(dayObject => {
+  //   if (dayObject.name === day) {
+  //     dayObject.appointments.forEach(apptId => appointmentIds.push(apptId))
+  //   }
+  // })
+
+  // for (let appointmentId of appointmentIds){
+  //   if(state.appointments[appointmentId].interview?.interviewer){
       
-      //console.log(state.appointments[appointmentId].interview.interviewer)
+  //     //console.log(state.appointments[appointmentId].interview.interviewer)
       
-      const interviewerId = state.appointments[appointmentId].interview.interviewer;
-      //if (day === 'Tuesday') console.log('interviewerId',interviewerId, appointmentId)
-      if (!(interviewerId in interviewerExists))
-      {
-      results.push(state.interviewers[interviewerId])
-      }
-      interviewerExists[interviewerId] = true;
-    }
-  }
-  //console.log('Interviewers', results)
-  return results;
+  //     const interviewerId = state.appointments[appointmentId].interview.interviewer;
+  //     //if (day === 'Tuesday') console.log('interviewerId',interviewerId, appointmentId)
+  //     if (!(interviewerId in interviewerExists))
+  //     {
+  //     results.push(state.interviewers[interviewerId])
+  //     }
+  //     interviewerExists[interviewerId] = true;
+  //   }
+  // }
+  // //console.log('Interviewers', results)
+  // return results;
  }
 
 // function getInterviewersForDay(state, day) {
