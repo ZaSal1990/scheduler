@@ -27,4 +27,4 @@ function getInterviewersForDay(state, day) {
   return interviewersForDay;
 }
 
-module.exports = { getAppointmentsForDay, getInterview, getInterviewersForDay }
+module.exports = { getAppointmentsForDay, getInterviewersForDay }
